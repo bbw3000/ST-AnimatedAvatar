@@ -13,6 +13,7 @@
 - 默认静态头像使用原角色卡头像；不维护单独的默认静态/动态 WebP。
 - 插件 UI 采用居中浮层，背景 blur，点击背景关闭。
 - 窄屏判断沿用 ST 的单栏布局逻辑；窄屏时插件直接全屏显示。
+- 聊天页头像只在确实有 `data.extensions.animated_avatar.url` 时才接管 DOM；没有动图配置的角色必须保留 ST 原生头像点击结构。
 
 ## UI 约定
 - UI 主体只保留动态头像设置，不再保留静态头像预览/切换面板。
@@ -29,20 +30,23 @@
 - 预览图使用 `position: absolute`，以 `top/left` 百分比控制偏移（基于 `Offset X/Y` 拉杆值），`transform` 中使用 `translate(-50%, -50%)` 做居中锚定。
 - `Offset X/Y` 范围为 `0–100`，对应 `left/top` 的百分比值。默认 `50/50` 表示居中。
 - 调整控制时不应重复重设 `img.src`，否则 animated WebP 会从头播放。
+- 聊天消息头像的懒加载只在激活区内切换到 animated WebP；离开保护区后不再强制切回静态图，以避免反复重播。
 
 ## 交互约定
 - 聊天页头像入口：桌面端 hover 显示编辑按钮；移动端长按头像进入编辑。
 - 头像放大逻辑会受到 ST 原生 zoom 行为影响，若需要修正外链 URL，需在插件中额外 patch zoomed avatar。
 - `Remove` 必须真正删除角色卡中的 `data.extensions.animated_avatar`，并立即让页面回退到原角色卡静态头像。
 - 保存后必须刷新当前角色卡内存态与聊天内已注册头像状态。
+- window 模式的大图右上角需要提供 hover zoom 开关，且只在非 fullscreen 状态显示；关闭聊天时要自动关闭大图 viewer。
+- 如果消息对应角色没有 `animated_avatar.url`，头像点击必须交还 ST 原生大图逻辑，不能拦截原生点击。
 
 ## 技术细节
 - 角色卡保存优先使用 `/api/characters/merge-attributes` 做增量保存。
 - 删除配置时使用完整角色卡保存流程，避免 `merge` 无法可靠删除字段。
-- 读取聊天消息头像时，优先依据 `mesid -> context.chat[mesid]` 和消息中的 `original_avatar` / `force_avatar` 回溯角色。
+- 读取聊天消息头像时，优先依据 `mesid -> context.chat[mesid]`，再用 `original_avatar` / `force_avatar` 回溯角色；group chat 下优先按 `ch_name` / `name` 精确匹配角色，避免 fallback 到 current character 串人。
 - 消息头像渲染使用 `IntersectionObserver` 管理激活/停用：
   - 设置 `rootMargin: '300px 0px 300px 0px'` 作为安全缓冲区。
-  - 头像进入缓冲区上方 300px 即开始加载 animated WebP，离开缓冲区下方 300px 才切回静态。
+  - 头像进入缓冲区上方 300px 即开始加载 animated WebP。
   - 避免在视口边缘附近高频切换导致 CPU 高消耗。
   - `threshold: 0`，只要有一个像素在扩展的根区域内即视为相交。
 - 需要监听的 ST 事件至少包括 `CHAT_CHANGED`、`USER_MESSAGE_RENDERED`、`CHARACTER_MESSAGE_RENDERED`、`MESSAGE_UPDATED`、`MESSAGE_SWIPED`、`MORE_MESSAGES_LOADED`、`PERSONA_CHANGED`。

@@ -1,0 +1,106 @@
+<div id="aa-backdrop" style="display: none;"></div>
+
+<div id="aa-window" style="display: none;">
+    <div id="aa-main-view" class="aa-main-view">
+        <section class="aa-pane aa-pane-animated">
+            <div class="aa-pane-label">Animated avatar</div>
+            <div id="aa-animated-empty" class="aa-empty-stage">
+                <div class="aa-empty-box">No animated avatar set</div>
+            </div>
+            <div id="aa-animated-editor" class="aa-editor-stage" style="display: none;">
+                <div id="aa-animated-stage" class="aa-avatar-stage aa-animated-stage">
+                    <img id="aa-animated-preview" class="aa-preview-img aa-crop-img" alt="Animated avatar">
+                    <div class="aa-controls-overlay">
+                        <div class="aa-controls-hint">Click preview to toggle controls</div>
+                        <div class="aa-controls-panel">
+                            <div class="aa-control-row">
+                                <span>Scale</span>
+                                <div class="aa-control-actions">
+                                    <input id="aa-scale" type="range" min="1" max="2" step="0.01">
+                                    <button type="button" class="aa-reset-btn" data-reset-target="aa-scale" title="Reset">↺</button>
+                                </div>
+                            </div>
+                            <div class="aa-control-row">
+                                <span>Offset X</span>
+                                <div class="aa-control-actions">
+                                    <input id="aa-offset-x" type="range" min="0" max="100" step="1">
+                                    <button type="button" class="aa-reset-btn" data-reset-target="aa-offset-x" title="Reset">↺</button>
+                                </div>
+                            </div>
+                            <div class="aa-control-row">
+                                <span>Offset Y</span>
+                                <div class="aa-control-actions">
+                                    <input id="aa-offset-y" type="range" min="0" max="100" step="1">
+                                    <button type="button" class="aa-reset-btn" data-reset-target="aa-offset-y" title="Reset">↺</button>
+                                </div>
+                            </div>
+                            <div class="aa-control-row">
+                                <span>Rotate</span>
+                                <div class="aa-control-actions">
+                                    <input id="aa-rotate" type="range" min="-180" max="180" step="1">
+                                    <button type="button" class="aa-reset-btn" data-reset-target="aa-rotate" title="Reset">↺</button>
+                                </div>
+                            </div>
+                            <div class="aa-control-row">
+                                <span>Brightness</span>
+                                <div class="aa-control-actions">
+                                    <input id="aa-brightness" type="range" min="0.5" max="1.5" step="0.01">
+                                    <button type="button" class="aa-reset-btn" data-reset-target="aa-brightness" title="Reset">↺</button>
+                                </div>
+                            </div>
+                            <div class="aa-control-row">
+                                <span>Contrast</span>
+                                <div class="aa-control-actions">
+                                    <input id="aa-contrast" type="range" min="0.5" max="1.5" step="0.01">
+                                    <button type="button" class="aa-reset-btn" data-reset-target="aa-contrast" title="Reset">↺</button>
+                                </div>
+                            </div>
+                            <div class="aa-control-row">
+                                <span>Saturation</span>
+                                <div class="aa-control-actions">
+                                    <input id="aa-saturate" type="range" min="0" max="2" step="0.01">
+                                    <button type="button" class="aa-reset-btn" data-reset-target="aa-saturate" title="Reset">↺</button>
+                                </div>
+                            </div>
+                            <div class="aa-control-row aa-toggle-row">
+                                <div class="aa-toggle-label-group">
+                                    <span>Flip</span>
+                                    <label><input id="aa-flip-x" type="checkbox"> X</label>
+                                    <label><input id="aa-flip-y" type="checkbox"> Y</label>
+                                </div>
+                                <button type="button" class="aa-reset-btn aa-reset-all-btn" data-reset-all="true" title="Reset all parameters">Reset all</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="aa-url-area">
+        <div class="aa-url-row">
+            <input id="aa-url-input" type="url" placeholder="https://example.com/avatar.webp" autocomplete="off">
+            <button id="aa-url-confirm" type="button">GET</button>
+        </div>
+        <div id="aa-url-status" class="aa-status-line"></div>
+    </div>
+
+    <div class="aa-footer">
+        <button id="aa-remove" type="button" class="aa-btn aa-btn-ghost">Remove</button>
+        <div class="aa-footer-spacer"></div>
+        <button id="aa-save" type="button" class="aa-btn aa-btn-primary">Save</button>
+        <button id="aa-cancel" type="button" class="aa-btn aa-btn-secondary">Cancel</button>
+    </div>
+</div>
+
+<div id="aa-zoom-backdrop" style="display: none;">
+    <div id="aa-zoom-viewer" class="aa-zoom-viewer">
+        <button id="aa-zoom-close" type="button" class="aa-zoom-close" title="Close">×</button>
+        <button id="aa-zoom-hover-toggle" type="button" class="aa-zoom-hover-toggle" title="Toggle hover zoom" aria-pressed="true">⌕</button>
+        <div id="aa-zoom-frame" class="aa-zoom-frame">
+            <img id="aa-zoom-img" class="aa-zoom-img" alt="Animated avatar zoom">
+            <button id="aa-zoom-edit" type="button" class="aa-zoom-edit">Edit</button>
+        </div>
+        <div id="aa-zoom-resize" class="aa-zoom-resize" title="Resize"></div>
+    </div>
+</div>
