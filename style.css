@@ -304,7 +304,7 @@
     height: 100%;
     max-width: none;
     max-height: none;
-    object-fit: cover;
+    object-fit: contain;
     object-position: 50% 50%;
     border: none;
     transition: opacity 0.18s ease;
@@ -524,7 +524,7 @@
     height: 100%;
     max-width: none;
     max-height: none;
-    object-fit: cover;
+    object-fit: contain;
     object-position: 50% 50%;
     border: none !important;
     touch-action: none;

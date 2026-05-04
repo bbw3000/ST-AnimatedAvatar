@@ -149,7 +149,7 @@ function applyConfigToImage(img, config) {
     const scale = clampScale(Number(fit.scale ?? defaultConfig.fit.scale));
     const hoverScale = 'var(--aa-zoom-hover-scale, 1)';
 
-    img.style.objectFit = 'cover';
+    img.style.objectFit = 'contain';
     img.style.objectPosition = '50% 50%';
     img.style.position = 'absolute';
     img.style.top = `${clampPercent(Number(fit.y ?? 0))}%`;
